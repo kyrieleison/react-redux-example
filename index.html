@@ -47,7 +47,7 @@
             created_at: (new Date()).toLocaleString()
           };
 
-          this.setState({ items: this.state.items.concat([newItem]) });
+          this.setState({ items: [newItem].concat(this.state.items) });
         },
         handleUserInput: function(filter) {
           this.setState({ filter: filter });
