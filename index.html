@@ -49,6 +49,13 @@
 
           this.setState({ items: [newItem].concat(this.state.items) });
         },
+        itemDestroy: function(id) {
+          var filteredItems = this.state.items.filter(function(item) {
+            return item.id == id ? false : true;
+          });
+
+          this.setState({ items: filteredItems });
+        },
         handleUserInput: function(filter) {
           this.setState({ filter: filter });
         },
@@ -66,6 +73,7 @@
               <ItemList
                 items={this.state.items}
                 filter={this.state.filter}
+                onItemDestroy={this.itemDestroy}
               />
             </div>
           );
@@ -118,7 +126,7 @@
             if (item.name.indexOf(this.props.filter) === -1) {
               return;
             } else {
-              return <Item key={item.id} created_at={item.created_at}>{item.name}</Item>;
+              return <Item key={item.id} id={item.id} created_at={item.created_at} onItemDestroy={this.props.onItemDestroy} >{item.name}</Item>;
             }
           }.bind(this));
           return (
@@ -130,11 +138,18 @@
       });
       
       var Item = React.createClass({
+        handleDestroy: function(e) {
+          e.preventDefault();
+          this.props.onItemDestroy(this.props.id);
+        },
         render: function() {
           return (
             <div className="item">
               <span className="name">最強の{this.props.children}</span>
-              <span className="date">{this.props.created_at}</span>
+              <div className="right">
+                <span className="date">{this.props.created_at}</span>
+                <span className="delete" onClick={this.handleDestroy}><i className="icon">close</i></span>
+              </div>
             </div>
           );
         }
