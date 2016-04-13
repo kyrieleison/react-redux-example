@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>わたしの考えた最強のECサイト(仮)</title>
+    <script src="https://fb.me/react-0.13.3.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script type="text/jsx">
+      var App = React.createClass({
+        getInitialState: function() {
+          return {
+            items: [],
+            filter: ''
+          };
+        },
+        componentDidMount: function() {
+          var items = [
+            { id: 'i9tajcvb', name: '濃密ギリシャヨーグルト パルテノ プレーン', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajxcv', name: '濃密ギリシャヨーグルト パルテノ はちみつ', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajzxc', name: '濃密ギリシャヨーグルト パルテノ ブルーベリーソース入り', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajvbn', name: '濃密ギリシャヨーグルト パルテノ キウイソース入り', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajdgg', name: '濃密ギリシャヨーグルト パルテノ ブラッドオレンジソース入り', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajdw9', name: 'ダノンビオ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajdjk', name: 'ダノンビオ プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajdff', name: 'ダノンビオ 脂肪ゼロ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9taasdd', name: 'ダノンデンシア プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajfas', name: 'ダノンデンシア プレーン・加糖', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajgff', name: 'カスピ海ヨーグルト プレーン', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9taeurr', name: '明治プロビオヨーグルトLG21', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9taju3e', name: '明治プロビオヨーグルトLG21 砂糖ゼロ', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajdas', name: '明治プロビオヨーグルトR-1', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajuie', name: '明治プロビオヨーグルトR-1 低脂肪', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajqwe', name: 'オイコス 脂肪ゼロ プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
+            { id: 'i9tajwer', name: 'オイコス 脂肪ゼロ プレーン・加糖', created_at: '2015/05/01 9:00:00' }
+          ];
+
+          this.setState({ items: items });
+        },
+        itemCreate: function(name) {
+          var newItem = {
+            id: (Date.now() + Math.floor(Math.random() * 999999)).toString(36),
+            name: name,
+            created_at: (new Date()).toLocaleString()
+          };
+
+          this.setState({ items: this.state.items.concat([newItem]) });
+        },
+        handleUserInput: function(filter) {
+          this.setState({ filter: filter });
+        },
+        render: function() {
+          return (
+            <div className="app">
+              <h1>わたしの考えた最強のECサイト(仮)</h1>
+              <ItemCreateForm
+                onItemCreate={this.itemCreate}
+              />
+              <ItemSearchForm
+                filter={this.state.filter}
+                onUserInput={this.handleUserInput}
+              />
+              <ItemList
+                items={this.state.items}
+                filter={this.state.filter}
+              />
+            </div>
+          );
+        }
+      });
+
+      var ItemCreateForm = React.createClass({
+        handleSubmit: function(e) {
+          e.preventDefault();
+
+          var name = React.findDOMNode(this.refs.name);
+          if (name.value !== '') {
+            this.props.onItemCreate(name.value.trim());
+          }
+          name.value = '';
+        },
+        render: function() {
+          return (
+            <form className="form itemCreateForm" onSubmit={this.handleSubmit}>
+              <input type="text" placeholder="商品名" ref="name" />
+              <button type="submit">追加</button>
+            </form>
+          );
+        }
+      });
+
+      var ItemSearchForm = React.createClass({
+        handleChange: function(e) {
+          e.preventDefault();
+          this.props.onUserInput(this.refs.filter.getDOMNode().value);
+        },
+        render: function() {
+          return (
+            <form className="form itemSearchForm">
+              <input
+                type="text"
+                placeholder="絞込検索"
+                value={this.props.filter}
+                ref="filter"
+                onChange={this.handleChange}
+              />
+            </form>
+          );
+        }
+      });
+
+      var ItemList = React.createClass({
+        render: function() {
+          var items = this.props.items.map(function(item) {
+            if (item.name.indexOf(this.props.filter) === -1) {
+              return;
+            } else {
+              return <Item key={item.id} created_at={item.created_at}>{item.name}</Item>;
+            }
+          }.bind(this));
+          return (
+            <div className="itemList">
+              {items}
+            </div>
+          );
+        }
+      });
+      
+      var Item = React.createClass({
+        render: function() {
+          return (
+            <div className="item">
+              <span className="name">最強の{this.props.children}</span>
+              <span className="date">{this.props.created_at}</span>
+            </div>
+          );
+        }
+      });
+      React.render(<App />, document.body);
+    </script>
+  </body>
+</html>
