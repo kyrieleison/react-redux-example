@@ -3,29 +3,34 @@ var assign        = require('object-assign');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ItemConstants = require('../constants/ItemConstants');
 
-var _items = [];
+var state = {
+  items: [],
+  filter: '',
+};
 
 function setup(items) {
-  _items = items;
+  state['items'] = items;
 }
 
 function create(name) {
-  var item = {
+  var newItem = {
     id: (Date.now() + Math.floor(Math.random() * 999999)).toString(36),
     name: name,
     created_at: (new Date()).toLocaleString()
   };
-  _items = _items.concat([item]);
+  state['items'] = [newItem].concat(state['items']);
 }
 
 function destroy(id) {
-  var newItems = _items.filter(function(item) { return item.id == id ? false : true });
-  _items = newItems;
+  var filterdItems = state['items'].filter(function(item) {
+    return item.id == id ? false : true;
+  });
+  state['items'] = filterdItems;
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
-    return _items;
+    return state;
   },
 
   emitChange: function() {
