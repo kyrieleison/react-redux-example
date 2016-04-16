@@ -17,7 +17,7 @@ module.exports = React.createClass({
 
   componentWillUnmount: function() {
     ItemStore.removeChangeListener(this._onChange);
-  },
+I},
 
   _onChange: function() {
     this.setState(ItemStore.getAll());
@@ -29,7 +29,7 @@ module.exports = React.createClass({
         <h1>わたしの考えた最強のECサイト(仮)</h1>
         <ItemCreateForm />
         <ItemSearchForm />
-        <ItemList items={this.state.items} />
+        <ItemList items={this.state.items} filter={this.state.filter} />
       </div>
     );
   }

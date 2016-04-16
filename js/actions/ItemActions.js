@@ -22,10 +22,12 @@ module.exports = {
       { id: 'i9tajqwe', name: 'オイコス 脂肪ゼロ プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
       { id: 'i9tajwer', name: 'オイコス 脂肪ゼロ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
     ];
+    var filter = '';
 
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SETUP,
-      items: items
+      items: items,
+      filter: filter
     });
   },
 
@@ -33,6 +35,13 @@ module.exports = {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CREATE,
       name: name
+    });
+  },
+
+  search: function(filter) {
+    AppDispatcher.dispatch({
+      actionType: ItemConstants.ITEM_SEARCH,
+      filter: filter
     });
   },
 

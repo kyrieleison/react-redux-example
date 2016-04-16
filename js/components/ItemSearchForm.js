@@ -2,19 +2,17 @@ var React       = require('react');
 var ItemActions = require('../actions/ItemActions');
 
 module.exports = React.createClass({
-  handleSubmit: function(e) {
+  handleChange: function(e) {
     e.preventDefault();
 
-    var name = React.findDOMNode(this.refs.name);
-    ItemActions.create(name.value.trim());
-    name.value = '';
+    var filter = React.findDOMNode(this.refs.filter);
+    ItemActions.search(filter.value.trim());
   },
 
   render: function() {
     return (
-      <form className="form itemCreateForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="商品名" ref="name" />
-        <button type="submit">追加</button>
+      <form className="form itemSearchForm">
+        <input type="text" placeholder="絞込検索" ref="filter" value={this.props.filter} onChange={this.handleChange} />
       </form>
     );
   }

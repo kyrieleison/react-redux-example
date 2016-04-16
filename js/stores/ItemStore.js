@@ -8,8 +8,9 @@ var state = {
   filter: '',
 };
 
-function setup(items) {
+function setup(items, filter) {
   state['items'] = items;
+  state['filter'] = filter;
 }
 
 function create(name) {
@@ -19,6 +20,10 @@ function create(name) {
     created_at: (new Date()).toLocaleString()
   };
   state['items'] = [newItem].concat(state['items']);
+}
+
+function search(filter) {
+  state['filter'] = filter;
 }
 
 function destroy(id) {
@@ -49,7 +54,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case ItemConstants.ITEM_SETUP:
-      setup(action.items);
+      setup(action.items, action.filter);
       ItemStore.emitChange();
       break;
 
@@ -59,6 +64,12 @@ AppDispatcher.register(function(action) {
         create(name);
         ItemStore.emitChange();
       }
+      break;
+
+    case ItemConstants.ITEM_SEARCH:
+      var filter = action.filter.trim();
+      search(filter);
+      ItemStore.emitChange();
       break;
 
     case ItemConstants.ITEM_DESTROY:

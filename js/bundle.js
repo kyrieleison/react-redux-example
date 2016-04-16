@@ -23,10 +23,12 @@ module.exports = {
       { id: 'i9tajqwe', name: 'オイコス 脂肪ゼロ プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
       { id: 'i9tajwer', name: 'オイコス 脂肪ゼロ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
     ];
+    var filter = '';
 
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SETUP,
-      items: items
+      items: items,
+      filter: filter
     });
   },
 
@@ -34,6 +36,13 @@ module.exports = {
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CREATE,
       name: name
+    });
+  },
+
+  search: function(filter) {
+    AppDispatcher.dispatch({
+      actionType: ItemConstants.ITEM_SEARCH,
+      filter: filter
     });
   },
 
@@ -71,7 +80,7 @@ module.exports = React.createClass({displayName: "exports",
 
   componentWillUnmount: function() {
     ItemStore.removeChangeListener(this._onChange);
-  },
+I},
 
   _onChange: function() {
     this.setState(ItemStore.getAll());
@@ -83,7 +92,7 @@ module.exports = React.createClass({displayName: "exports",
         React.createElement("h1", null, "わたしの考えた最強のECサイト(仮)"), 
         React.createElement(ItemCreateForm, null), 
         React.createElement(ItemSearchForm, null), 
-        React.createElement(ItemList, {items: this.state.items})
+        React.createElement(ItemList, {items: this.state.items, filter: this.state.filter})
       )
     );
   }
@@ -143,8 +152,12 @@ var Item  = require('./Item');
 module.exports = React.createClass({displayName: "exports",
   render: function() {
     var items = this.props.items.map(function(item) {
-      return React.createElement(Item, {key: item.id, id: item.id, created_at: item.created_at}, item.name);
-    });
+      if (item.name.indexOf(this.props.filter) === -1) {
+        return;
+      } else {
+        return React.createElement(Item, {key: item.id, id: item.id, created_at: item.created_at}, item.name);
+      }
+    }.bind(this));
     return (
       React.createElement("div", {className: "itemList"}, 
         items
@@ -158,19 +171,17 @@ var React       = require('react');
 var ItemActions = require('../actions/ItemActions');
 
 module.exports = React.createClass({displayName: "exports",
-  handleSubmit: function(e) {
+  handleChange: function(e) {
     e.preventDefault();
 
-    var name = React.findDOMNode(this.refs.name);
-    ItemActions.create(name.value.trim());
-    name.value = '';
+    var filter = React.findDOMNode(this.refs.filter);
+    ItemActions.search(filter.value.trim());
   },
 
   render: function() {
     return (
-      React.createElement("form", {className: "form itemCreateForm", onSubmit: this.handleSubmit}, 
-        React.createElement("input", {type: "text", placeholder: "商品名", ref: "name"}), 
-        React.createElement("button", {type: "submit"}, "追加")
+      React.createElement("form", {className: "form itemSearchForm"}, 
+        React.createElement("input", {type: "text", placeholder: "絞込検索", ref: "filter", value: this.props.filter, onChange: this.handleChange})
       )
     );
   }
@@ -182,6 +193,7 @@ var keyMirror = require('keymirror');
 module.exports = keyMirror({
   ITEM_SETUP:   null,
   ITEM_CREATE:  null,
+  ITEM_SEARCH:  null,
   ITEM_DESTROY: null
 });
 
@@ -201,8 +213,9 @@ var state = {
   filter: '',
 };
 
-function setup(items) {
+function setup(items, filter) {
   state['items'] = items;
+  state['filter'] = filter;
 }
 
 function create(name) {
@@ -212,6 +225,10 @@ function create(name) {
     created_at: (new Date()).toLocaleString()
   };
   state['items'] = [newItem].concat(state['items']);
+}
+
+function search(filter) {
+  state['filter'] = filter;
 }
 
 function destroy(id) {
@@ -242,7 +259,7 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case ItemConstants.ITEM_SETUP:
-      setup(action.items);
+      setup(action.items, action.filter);
       ItemStore.emitChange();
       break;
 
@@ -252,6 +269,12 @@ AppDispatcher.register(function(action) {
         create(name);
         ItemStore.emitChange();
       }
+      break;
+
+    case ItemConstants.ITEM_SEARCH:
+      var filter = action.filter.trim();
+      search(filter);
+      ItemStore.emitChange();
       break;
 
     case ItemConstants.ITEM_DESTROY:
