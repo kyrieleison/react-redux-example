@@ -4,11 +4,26 @@ var ItemConstants = require('../constants/ItemConstants');
 
 module.exports = {
   setup: function() {
-    // NOTE: ここでAjaxを用いてサーバサイドから取得してもよい
     var items = [
-      { id: 'i9tajxy9', name: '牛乳を買う', created_at: '2015/05/01 9:00:00' },
-      { id: 'i9ta58tx', name: 'パンを買う', created_at: '2015/05/01 9:00:00' }
+      { id: 'i9tajcvb', name: '濃密ギリシャヨーグルト パルテノ プレーン', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajxcv', name: '濃密ギリシャヨーグルト パルテノ はちみつ', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajzxc', name: '濃密ギリシャヨーグルト パルテノ ブルーベリーソース入り', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajvbn', name: '濃密ギリシャヨーグルト パルテノ キウイソース入り', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajdgg', name: '濃密ギリシャヨーグルト パルテノ ブラッドオレンジソース入り', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajdw9', name: 'ダノンビオ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajdjk', name: 'ダノンビオ プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajdff', name: 'ダノンビオ 脂肪ゼロ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9taasdd', name: 'ダノンデンシア プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajfas', name: 'ダノンデンシア プレーン・加糖', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajgff', name: 'カスピ海ヨーグルト プレーン', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9taeurr', name: '明治プロビオヨーグルトLG21', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9taju3e', name: '明治プロビオヨーグルトLG21 砂糖ゼロ', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajdas', name: '明治プロビオヨーグルトR-1', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajuie', name: '明治プロビオヨーグルトR-1 低脂肪', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajqwe', name: 'オイコス 脂肪ゼロ プレーン・砂糖不使用', created_at: '2015/05/01 9:00:00' },
+      { id: 'i9tajwer', name: 'オイコス 脂肪ゼロ プレーン・加糖', created_at: '2015/05/01 9:00:00' },
     ];
+
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_SETUP,
       items: items
@@ -16,7 +31,6 @@ module.exports = {
   },
 
   create: function(name) {
-    // NOTE: ここでAjaxを用いてサーバサイドから取得・作成してもよい
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_CREATE,
       name: name
@@ -24,7 +38,6 @@ module.exports = {
   },
 
   destroy: function(id) {
-    // NOTE: ここでAjaxを用いてサーバサイドから取得・削除してもよい
     AppDispatcher.dispatch({
       actionType: ItemConstants.ITEM_DESTROY,
       id: id
@@ -39,11 +52,11 @@ var App = require('./components/App');
 React.render(React.createElement(App, null), document.body);
 
 },{"./components/App":3,"react":169}],3:[function(require,module,exports){
-var React       = require('react');
-var ItemActions = require('../actions/ItemActions');
-var ItemStore   = require('../stores/ItemStore');
-var ItemForm    = require('./ItemForm');
-var ItemList    = require('./ItemList');
+var React          = require('react');
+var ItemActions    = require('../actions/ItemActions');
+var ItemStore      = require('../stores/ItemStore');
+var ItemCreateForm = require('./ItemCreateForm');
+var ItemList       = require('./ItemList');
 
 module.exports = React.createClass({displayName: "exports",
   getInitialState: function() {
@@ -68,15 +81,15 @@ module.exports = React.createClass({displayName: "exports",
   render: function() {
     return (
       React.createElement("div", {className: "app"}, 
-        React.createElement("h1", null, "TODO Application"), 
-        React.createElement(ItemForm, null), 
+        React.createElement("h1", null, "わたしの考えた最強のECサイト(仮)"), 
+        React.createElement(ItemCreateForm, null), 
         React.createElement(ItemList, {items: this.state.items})
       )
     );
   }
 });
 
-},{"../actions/ItemActions":1,"../stores/ItemStore":9,"./ItemForm":5,"./ItemList":6,"react":169}],4:[function(require,module,exports){
+},{"../actions/ItemActions":1,"../stores/ItemStore":9,"./ItemCreateForm":5,"./ItemList":6,"react":169}],4:[function(require,module,exports){
 var React       = require('react');
 var ItemActions = require('../actions/ItemActions');
 
@@ -90,9 +103,11 @@ module.exports = React.createClass({displayName: "exports",
   render: function() {
     return (
       React.createElement("div", {className: "item"}, 
-        React.createElement("span", {className: "name"}, this.props.children), 
-        React.createElement("span", {className: "date"}, this.props.created_at), 
-        React.createElement("button", {onClick: this.handleDestroy}, "削除")
+        React.createElement("span", {className: "name"}, "最強の", this.props.children), 
+        React.createElement("div", {className: "right"}, 
+          React.createElement("span", {className: "date"}, this.props.created_at), 
+          React.createElement("span", {className: "delete", onClick: this.handleDestroy}, React.createElement("i", {className: "icon"}, "close"))
+        )
       )
     );
   }
@@ -113,9 +128,9 @@ module.exports = React.createClass({displayName: "exports",
 
   render: function() {
     return (
-      React.createElement("form", {className: "itemForm", onSubmit: this.handleSubmit}, 
-        React.createElement("input", {type: "text", placeholder: "入力...", ref: "name"}), 
-        React.createElement("button", {type: "submit"}, "作成")
+      React.createElement("form", {className: "form itemCreateForm", onSubmit: this.handleSubmit}, 
+        React.createElement("input", {type: "text", placeholder: "商品名", ref: "name"}), 
+        React.createElement("button", {type: "submit"}, "追加")
       )
     );
   }
@@ -174,8 +189,8 @@ function create(name) {
 }
 
 function destroy(id) {
-    var newItems = _items.filter(function(item) { return item.id == id ? false : true });
-    _items = newItems;
+  var newItems = _items.filter(function(item) { return item.id == id ? false : true });
+  _items = newItems;
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {

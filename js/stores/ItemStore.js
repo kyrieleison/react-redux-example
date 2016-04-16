@@ -19,8 +19,8 @@ function create(name) {
 }
 
 function destroy(id) {
-    var newItems = _items.filter(function(item) { return item.id == id ? false : true });
-    _items = newItems;
+  var newItems = _items.filter(function(item) { return item.id == id ? false : true });
+  _items = newItems;
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {

@@ -12,9 +12,9 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <form className="itemForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="入力..." ref="name" />
-        <button type="submit">作成</button>
+      <form className="form itemCreateForm" onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="商品名" ref="name" />
+        <button type="submit">追加</button>
       </form>
     );
   }

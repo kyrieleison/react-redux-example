@@ -11,9 +11,11 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="item">
-        <span className="name">{this.props.children}</span>
-        <span className="date">{this.props.created_at}</span>
-        <button onClick={this.handleDestroy}>削除</button>
+        <span className="name">最強の{this.props.children}</span>
+        <div className="right">
+          <span className="date">{this.props.created_at}</span>
+          <span className="delete" onClick={this.handleDestroy}><i className="icon">close</i></span>
+        </div>
       </div>
     );
   }
