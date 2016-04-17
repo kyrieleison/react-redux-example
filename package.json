@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-      "build": "browserify -t reactify ./js/app.js > ./js/bundle.js",
-      "watch": "watchify -v -t reactify ./js/app.js -o ./js/bundle.js"
+      "build_flux": "browserify -t reactify ./flux/app.js > ./flux/bundle.js",
+      "watch_flux": "watchify -v -t reactify ./flux/app.js -o ./flux/bundle.js"
     },
   "dependencies": {
       "flux": "^2.0.3",
