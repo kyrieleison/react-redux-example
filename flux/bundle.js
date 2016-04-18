@@ -178,9 +178,13 @@ module.exports = React.createClass({displayName: "exports",
     ItemActions.search(filter.value.trim());
   },
 
+  handleSubmit: function(e) {
+    e.preventDefault();
+  },
+
   render: function() {
     return (
-      React.createElement("form", {className: "form itemSearchForm"}, 
+      React.createElement("form", {className: "form itemSearchForm", onSubmit: this.handleSubmit}, 
         React.createElement("input", {type: "text", placeholder: "絞込検索", ref: "filter", value: this.props.filter, onChange: this.handleChange})
       )
     );

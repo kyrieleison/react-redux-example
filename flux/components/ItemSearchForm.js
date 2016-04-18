@@ -9,9 +9,13 @@ module.exports = React.createClass({
     ItemActions.search(filter.value.trim());
   },
 
+  handleSubmit: function(e) {
+    e.preventDefault();
+  },
+
   render: function() {
     return (
-      <form className="form itemSearchForm">
+      <form className="form itemSearchForm" onSubmit={this.handleSubmit}>
         <input type="text" placeholder="絞込検索" ref="filter" value={this.props.filter} onChange={this.handleChange} />
       </form>
     );
