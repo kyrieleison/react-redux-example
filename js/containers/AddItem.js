@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { addItem } from '../actions'
 
 let AddItem = ({ dispatch }) => {
-  let input
+  let name, stock
 
   return (
     <div>
@@ -11,18 +11,26 @@ let AddItem = ({ dispatch }) => {
         className="form itemCreateForm"
         onSubmit={e => {
           e.preventDefault()
-          if (!input.value.trim()) {
+          if (!name.value.trim() || !stock.value.trim()) {
             return
           }
-          dispatch(addItem(input.value))
-          input.value = ''
+          dispatch(addItem(name.value, stock.value))
+          name.value = ''
+          stock.value = ''
         }}
       >
         <input
           type="text"
           placeholder="商品名"
           ref={node => {
-            input = node
+            name = node
+          }}
+        />
+        <input
+          type="number"
+          placeholder="在庫数"
+          ref={node => {
+            stock = node
           }}
         />
         <button type="submit">

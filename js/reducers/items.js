@@ -4,6 +4,7 @@ const item = (state, action) => {
       return {
         id: (Date.now() + Math.floor(Math.random() * 999999)).toString(36),
         name: action.name,
+        stock: action.stock,
         created_at: (new Date()).toLocaleString(),
         completed: false
       }

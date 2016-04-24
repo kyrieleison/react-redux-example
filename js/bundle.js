@@ -21990,6 +21990,7 @@
 	      return {
 	        id: (Date.now() + Math.floor(Math.random() * 999999)).toString(36),
 	        name: action.name,
+	        stock: action.stock,
 	        created_at: new Date().toLocaleString(),
 	        completed: false
 	      };
@@ -22202,10 +22203,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var addItem = exports.addItem = function addItem(name) {
+	var addItem = exports.addItem = function addItem(name, stock) {
 	  return {
 	    type: 'ADD_ITEM',
-	    name: name
+	    name: name,
+	    stock: stock
 	  };
 	};
 	
@@ -22301,7 +22303,8 @@
 	var AddItem = function AddItem(_ref) {
 	  var dispatch = _ref.dispatch;
 	
-	  var input = void 0;
+	  var name = void 0,
+	      stock = void 0;
 	
 	  return _react2.default.createElement(
 	    'div',
@@ -22312,18 +22315,26 @@
 	        className: 'form itemCreateForm',
 	        onSubmit: function onSubmit(e) {
 	          e.preventDefault();
-	          if (!input.value.trim()) {
+	          if (!name.value.trim() || !stock.value.trim()) {
 	            return;
 	          }
-	          dispatch((0, _actions.addItem)(input.value));
-	          input.value = '';
+	          dispatch((0, _actions.addItem)(name.value, stock.value));
+	          name.value = '';
+	          stock.value = '';
 	        }
 	      },
 	      _react2.default.createElement('input', {
 	        type: 'text',
 	        placeholder: '商品名',
 	        ref: function ref(node) {
-	          input = node;
+	          name = node;
+	        }
+	      }),
+	      _react2.default.createElement('input', {
+	        type: 'number',
+	        placeholder: '在庫数',
+	        ref: function ref(node) {
+	          stock = node;
 	        }
 	      }),
 	      _react2.default.createElement(
