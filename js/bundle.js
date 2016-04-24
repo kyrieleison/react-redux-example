@@ -21989,7 +21989,7 @@
 	    case 'ADD_ITEM':
 	      return {
 	        id: action.id,
-	        text: action.text,
+	        name: action.name,
 	        created_at: new Date().toLocaleString(),
 	        completed: false
 	      };
@@ -22203,11 +22203,11 @@
 	  value: true
 	});
 	var nextItemId = 0;
-	var addItem = exports.addItem = function addItem(text) {
+	var addItem = exports.addItem = function addItem(name) {
 	  return {
 	    type: 'ADD_ITEM',
 	    id: nextItemId++,
-	    text: text
+	    name: name
 	  };
 	};
 	
@@ -22443,7 +22443,8 @@
 	  items: _react.PropTypes.arrayOf(_react.PropTypes.shape({
 	    id: _react.PropTypes.number.isRequired,
 	    completed: _react.PropTypes.bool.isRequired,
-	    text: _react.PropTypes.string.isRequired
+	    name: _react.PropTypes.string.isRequired,
+	    created_at: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
 	  onItemClick: _react.PropTypes.func.isRequired
 	};
@@ -22472,7 +22473,7 @@
 	var Item = function Item(_ref) {
 	  var onClick = _ref.onClick;
 	  var completed = _ref.completed;
-	  var text = _ref.text;
+	  var name = _ref.name;
 	  var created_at = _ref.created_at;
 	  return _react2.default.createElement(
 	    'div',
@@ -22481,7 +22482,7 @@
 	      'span',
 	      { className: 'name' },
 	      '最強の',
-	      text
+	      name
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -22507,7 +22508,8 @@
 	Item.propTypes = {
 	  onClick: _react.PropTypes.func.isRequired,
 	  completed: _react.PropTypes.bool.isRequired,
-	  text: _react.PropTypes.string.isRequired
+	  name: _react.PropTypes.string.isRequired,
+	  created_at: _react.PropTypes.string.isRequired
 	};
 	
 	exports.default = Item;

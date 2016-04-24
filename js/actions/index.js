@@ -1,9 +1,9 @@
 let nextItemId = 0
-export const addItem = (text) => {
+export const addItem = (name) => {
   return {
     type: 'ADD_ITEM',
     id: nextItemId++,
-    text
+    name
   }
 }
 

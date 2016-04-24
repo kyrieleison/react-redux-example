@@ -3,7 +3,7 @@ const item = (state, action) => {
     case 'ADD_ITEM':
       return {
         id: action.id,
-        text: action.text,
+        name: action.name,
         created_at: (new Date()).toLocaleString(),
         completed: false
       }
