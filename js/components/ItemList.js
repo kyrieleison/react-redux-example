@@ -1,19 +1,25 @@
-var React = require('react');
-var Item  = require('./Item');
+import React, { PropTypes } from 'react'
+import Item from './Item'
 
-module.exports = React.createClass({
-  render: function() {
-    var items = this.props.items.map(function(item) {
-      if (item.name.indexOf(this.props.filter) === -1) {
-        return;
-      } else {
-        return <Item key={item.id} id={item.id} created_at={item.created_at}>{item.name}</Item>;
-      }
-    }.bind(this));
-    return (
-      <div className="itemList">
-        {items}
-      </div>
-    );
-  }
-});
+const ItemList = ({ items, onItemClick }) => (
+  <ul>
+    {items.map(item =>
+      <Item
+        key={item.id}
+        {...item}
+        onClick={() => onItemClick(item.id)}
+      />
+    )}
+  </ul>
+)
+
+ItemList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    completed: PropTypes.bool.isRequired,
+    text: PropTypes.string.isRequired
+  }).isRequired).isRequired,
+  onItemClick: PropTypes.func.isRequired
+}
+
+export default ItemList

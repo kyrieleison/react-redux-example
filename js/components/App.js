@@ -1,36 +1,14 @@
-var React          = require('react');
-var ItemActions    = require('../actions/ItemActions');
-var ItemStore      = require('../stores/ItemStore');
-var ItemCreateForm = require('./ItemCreateForm');
-var ItemSearchForm = require('./ItemSearchForm');
-var ItemList       = require('./ItemList');
+import React from 'react'
+import Footer from './Footer'
+import AddItem from '../containers/AddItem'
+import VisibleItemList from '../containers/VisibleItemList'
 
-module.exports = React.createClass({
-  getInitialState: function() {
-    return ItemStore.getAll();
-  },
+const App = () => (
+  <div>
+    <AddItem />
+    <VisibleItemList />
+    <Footer />
+  </div>
+)
 
-  componentDidMount: function() {
-    ItemStore.addChangeListener(this._onChange);
-    ItemActions.setup();
-  },
-
-  componentWillUnmount: function() {
-    ItemStore.removeChangeListener(this._onChange);
-I},
-
-  _onChange: function() {
-    this.setState(ItemStore.getAll());
-  },
-
-  render: function() {
-    return (
-      <div className="app">
-        <h1>わたしの考えた最強のECサイト(仮)</h1>
-        <ItemCreateForm />
-        <ItemSearchForm />
-        <ItemList items={this.state.items} filter={this.state.filter} />
-      </div>
-    );
-  }
-});
+export default App

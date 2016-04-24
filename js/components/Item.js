@@ -1,22 +1,20 @@
-var React       = require('react');
-var ItemActions = require('../actions/ItemActions');
+import React, { PropTypes } from 'react'
 
-module.exports = React.createClass({
-  handleDestroy: function(e) {
-    e.preventDefault();
+const Item = ({ onClick, completed, text }) => (
+  <li
+    onClick={onClick}
+    style={{
+      textDecoration: completed ? 'line-through' : 'none'
+    }}
+  >
+    {text}
+  </li>
+)
 
-    ItemActions.destroy(this.props.id);
-  },
+Item.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  completed: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired
+}
 
-  render: function() {
-    return (
-      <div className="item">
-        <span className="name">最強の{this.props.children}</span>
-        <div className="right">
-          <span className="date">{this.props.created_at}</span>
-          <span className="delete" onClick={this.handleDestroy}><i className="icon">close</i></span>
-        </div>
-      </div>
-    );
-  }
-});
+export default Item
