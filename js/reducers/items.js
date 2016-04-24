@@ -4,6 +4,7 @@ const item = (state, action) => {
       return {
         id: action.id,
         text: action.text,
+        created_at: (new Date()).toLocaleString(),
         completed: false
       }
     case 'TOGGLE_ITEM':

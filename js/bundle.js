@@ -21990,6 +21990,7 @@
 	      return {
 	        id: action.id,
 	        text: action.text,
+	        created_at: new Date().toLocaleString(),
 	        completed: false
 	      };
 	    case 'TOGGLE_ITEM':
@@ -22472,6 +22473,7 @@
 	  var onClick = _ref.onClick;
 	  var completed = _ref.completed;
 	  var text = _ref.text;
+	  var created_at = _ref.created_at;
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'item', style: { textDecoration: completed ? 'line-through' : 'none' }, onClick: onClick },
@@ -22487,7 +22489,7 @@
 	      _react2.default.createElement(
 	        'span',
 	        { className: 'date' },
-	        'XX/XX XX:XX'
+	        created_at
 	      ),
 	      _react2.default.createElement(
 	        'span',
