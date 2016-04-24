@@ -22012,7 +22012,7 @@
 	
 	  switch (action.type) {
 	    case 'ADD_ITEM':
-	      return [].concat(_toConsumableArray(state), [item(undefined, action)]);
+	      return [item(undefined, action)].concat(_toConsumableArray(state));
 	    case 'TOGGLE_ITEM':
 	      return state.map(function (t) {
 	        return item(t, action);
