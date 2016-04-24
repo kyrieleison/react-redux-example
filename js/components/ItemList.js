@@ -15,7 +15,7 @@ const ItemList = ({ items, onItemClick }) => (
 
 ItemList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     created_at: PropTypes.string.isRequired

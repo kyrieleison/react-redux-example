@@ -2,7 +2,7 @@ const item = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM':
       return {
-        id: action.id,
+        id: (Date.now() + Math.floor(Math.random() * 999999)).toString(36),
         name: action.name,
         created_at: (new Date()).toLocaleString(),
         completed: false

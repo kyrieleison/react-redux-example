@@ -21988,7 +21988,7 @@
 	  switch (action.type) {
 	    case 'ADD_ITEM':
 	      return {
-	        id: action.id,
+	        id: (Date.now() + Math.floor(Math.random() * 999999)).toString(36),
 	        name: action.name,
 	        created_at: new Date().toLocaleString(),
 	        completed: false
@@ -22202,11 +22202,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var nextItemId = 0;
 	var addItem = exports.addItem = function addItem(name) {
 	  return {
 	    type: 'ADD_ITEM',
-	    id: nextItemId++,
 	    name: name
 	  };
 	};
@@ -22441,7 +22439,7 @@
 	
 	ItemList.propTypes = {
 	  items: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
+	    id: _react.PropTypes.string.isRequired,
 	    completed: _react.PropTypes.bool.isRequired,
 	    name: _react.PropTypes.string.isRequired,
 	    created_at: _react.PropTypes.string.isRequired
