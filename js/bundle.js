@@ -22142,6 +22142,12 @@
 	    ", ",
 	    _react2.default.createElement(
 	      _FilterLink2.default,
+	      { filter: 'SHOW_SOLDOUT' },
+	      'Soldout'
+	    ),
+	    ", ",
+	    _react2.default.createElement(
+	      _FilterLink2.default,
 	      { filter: 'SHOW_COMPLETED' },
 	      'Completed'
 	    )
@@ -22380,9 +22386,13 @@
 	      return items.filter(function (t) {
 	        return t.completed;
 	      });
+	    case 'SHOW_SOLDOUT':
+	      return items.filter(function (t) {
+	        return t.stock <= 0;
+	      });
 	    case 'SHOW_ACTIVE':
 	      return items.filter(function (t) {
-	        return !t.completed;
+	        return !t.completed && t.stock > 0;
 	      });
 	  }
 	};
@@ -22453,6 +22463,7 @@
 	    id: _react.PropTypes.string.isRequired,
 	    completed: _react.PropTypes.bool.isRequired,
 	    name: _react.PropTypes.string.isRequired,
+	    stock: _react.PropTypes.string.isRequired,
 	    created_at: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
 	  onItemClick: _react.PropTypes.func.isRequired
@@ -22467,7 +22478,7 @@
   \*******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22483,31 +22494,42 @@
 	  var onClick = _ref.onClick;
 	  var completed = _ref.completed;
 	  var name = _ref.name;
+	  var stock = _ref.stock;
 	  var created_at = _ref.created_at;
 	  return _react2.default.createElement(
-	    'div',
-	    { className: 'item', style: { textDecoration: completed ? 'line-through' : 'none' }, onClick: onClick },
+	    "div",
+	    { className: "item", onClick: onClick },
 	    _react2.default.createElement(
-	      'span',
-	      { className: 'name' },
-	      '最強の',
+	      "span",
+	      { className: "name" },
+	      "最強の",
 	      name
 	    ),
+	    stock <= 0 ? _react2.default.createElement(
+	      "span",
+	      { className: "soldout" },
+	      "在庫なし"
+	    ) : '',
+	    completed ? _react2.default.createElement(
+	      "span",
+	      { className: "soldout" },
+	      "削除済"
+	    ) : '',
 	    _react2.default.createElement(
-	      'div',
-	      { className: 'right' },
+	      "div",
+	      { className: "right" },
 	      _react2.default.createElement(
-	        'span',
-	        { className: 'date' },
+	        "span",
+	        { className: "date" },
 	        created_at
 	      ),
 	      _react2.default.createElement(
-	        'span',
-	        { className: 'delete' },
+	        "span",
+	        { className: "delete" },
 	        _react2.default.createElement(
-	          'i',
-	          { className: 'icon' },
-	          'close'
+	          "i",
+	          { className: "icon" },
+	          "close"
 	        )
 	      )
 	    )
@@ -22518,6 +22540,7 @@
 	  onClick: _react.PropTypes.func.isRequired,
 	  completed: _react.PropTypes.bool.isRequired,
 	  name: _react.PropTypes.string.isRequired,
+	  stock: _react.PropTypes.string.isRequired,
 	  created_at: _react.PropTypes.string.isRequired
 	};
 	

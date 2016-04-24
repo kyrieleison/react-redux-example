@@ -8,8 +8,10 @@ const getVisibleItems = (items, filter) => {
       return items
     case 'SHOW_COMPLETED':
       return items.filter(t => t.completed)
+    case 'SHOW_SOLDOUT':
+      return items.filter(t => t.stock <= 0)
     case 'SHOW_ACTIVE':
-      return items.filter(t => !t.completed)
+      return items.filter(t => !t.completed && t.stock > 0)
   }
 }
 

@@ -13,6 +13,10 @@ const Filter = () => (
       Active
     </FilterLink>
     {", "}
+    <FilterLink filter="SHOW_SOLDOUT">
+      Soldout
+    </FilterLink>
+    {", "}
     <FilterLink filter="SHOW_COMPLETED">
       Completed
     </FilterLink>

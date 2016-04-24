@@ -125,6 +125,12 @@ html, body {
   color: #F35E3E;
 }
 
+.item .soldout {
+  padding-left: 10px;
+  font-size: .9rem;
+  color: #999;
+}
+
 .left {
   float: left;
 }
