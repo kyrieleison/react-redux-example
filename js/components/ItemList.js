@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import Item from './Item'
 
 const ItemList = ({ items, onItemClick }) => (
-  <ul>
+  <div className="itemList">
     {items.map(item =>
       <Item
         key={item.id}
@@ -10,7 +10,7 @@ const ItemList = ({ items, onItemClick }) => (
         onClick={() => onItemClick(item.id)}
       />
     )}
-  </ul>
+  </div>
 )
 
 ItemList.propTypes = {

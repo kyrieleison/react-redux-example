@@ -22066,9 +22066,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Footer = __webpack_require__(/*! ./Footer */ 189);
+	var _Filter = __webpack_require__(/*! ./Filter */ 189);
 	
-	var _Footer2 = _interopRequireDefault(_Footer);
+	var _Filter2 = _interopRequireDefault(_Filter);
 	
 	var _AddItem = __webpack_require__(/*! ../containers/AddItem */ 193);
 	
@@ -22083,10 +22083,15 @@
 	var App = function App() {
 	  return _react2.default.createElement(
 	    'div',
-	    null,
+	    { className: 'app' },
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      'わたしの考えた最強のECサイト(仮)'
+	    ),
 	    _react2.default.createElement(_AddItem2.default, null),
-	    _react2.default.createElement(_VisibleItemList2.default, null),
-	    _react2.default.createElement(_Footer2.default, null)
+	    _react2.default.createElement(_Filter2.default, null),
+	    _react2.default.createElement(_VisibleItemList2.default, null)
 	  );
 	};
 	
@@ -22095,7 +22100,7 @@
 /***/ },
 /* 189 */
 /*!*********************************!*\
-  !*** ./js/components/Footer.js ***!
+  !*** ./js/components/Filter.js ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
@@ -22115,7 +22120,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Footer = function Footer() {
+	var Filter = function Filter() {
 	  return _react2.default.createElement(
 	    'p',
 	    null,
@@ -22141,7 +22146,7 @@
 	  );
 	};
 	
-	exports.default = Footer;
+	exports.default = Filter;
 
 /***/ },
 /* 190 */
@@ -22304,21 +22309,28 @@
 	    null,
 	    _react2.default.createElement(
 	      'form',
-	      { onSubmit: function onSubmit(e) {
+	      {
+	        className: 'form itemCreateForm',
+	        onSubmit: function onSubmit(e) {
 	          e.preventDefault();
 	          if (!input.value.trim()) {
 	            return;
 	          }
 	          dispatch((0, _actions.addItem)(input.value));
 	          input.value = '';
-	        } },
-	      _react2.default.createElement('input', { ref: function ref(node) {
+	        }
+	      },
+	      _react2.default.createElement('input', {
+	        type: 'text',
+	        placeholder: '商品名',
+	        ref: function ref(node) {
 	          input = node;
-	        } }),
+	        }
+	      }),
 	      _react2.default.createElement(
 	        'button',
 	        { type: 'submit' },
-	        'Add Item'
+	        '追加'
 	      )
 	    )
 	  );
@@ -22412,8 +22424,8 @@
 	  var items = _ref.items;
 	  var onItemClick = _ref.onItemClick;
 	  return _react2.default.createElement(
-	    'ul',
-	    null,
+	    'div',
+	    { className: 'itemList' },
 	    items.map(function (item) {
 	      return _react2.default.createElement(_Item2.default, _extends({
 	        key: item.id
@@ -22461,14 +22473,32 @@
 	  var completed = _ref.completed;
 	  var text = _ref.text;
 	  return _react2.default.createElement(
-	    'li',
-	    {
-	      onClick: onClick,
-	      style: {
-	        textDecoration: completed ? 'line-through' : 'none'
-	      }
-	    },
-	    text
+	    'div',
+	    { className: 'item', style: { textDecoration: completed ? 'line-through' : 'none' }, onClick: onClick },
+	    _react2.default.createElement(
+	      'span',
+	      { className: 'name' },
+	      '最強の',
+	      text
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'right' },
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'date' },
+	        'XX/XX XX:XX'
+	      ),
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'delete' },
+	        _react2.default.createElement(
+	          'i',
+	          { className: 'icon' },
+	          'close'
+	        )
+	      )
+	    )
 	  );
 	};
 	
